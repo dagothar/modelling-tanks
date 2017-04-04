@@ -23,8 +23,8 @@ var Tank = (function() {
     var pa = params.pa;
     var g = params.g;
     
-    var A = Math.pi * D*D / 4.0;
-    var Aro = 1/(A * ro);
+    var A = Math.PI * D*D / 4.0;
+    var Aro = 1.0/(A * ro);
     
     // state
     var x = x0;
@@ -44,7 +44,7 @@ var Tank = (function() {
     
     
     //! Calculate derivatives of the state variables
-    this.dx = function(t, u, x) {
+    this.dxfun = function(t, u, x) {
       var dx = [0, 0];
       
       // state variables and inputs
@@ -54,28 +54,28 @@ var Tank = (function() {
       var z1 = u[0];
       var z2 = u[1];
       var z3 = u[2];
-      var u  = u[3] * U;
+      var H  = u[3] * U;
       
       // calculate flows
-      var q1 = mu1*k1*z1*Math.sqrt(2*ro*(p1-pa));
-      var q2 = mu2*k2*z2*Math.sqrt(2*ro*(p2-pa));
-      var q3 = (h > 0.0) ? mu3*k3*z3*ro*Math.sqrt(2*g*h) : 0.0;
+      q1 = mu1*k1*z1*Math.sqrt(2*ro*(p1-pa));
+      q2 = mu2*k2*z2*Math.sqrt(2*ro*(p2-pa));
+      q3 = (h > 0.0) ? mu3*k3*z3*ro*Math.sqrt(2*g*h) : 0.0;
       
       dx[0] = Aro * (q1 + q2 - q3);
-      dx[1] = Aro/h * (q1*(T1-T) + q2*(T2-T) + u*u/(R*Cp));
+      dx[1] = Aro/h * (q1*(T1-T) + q2*(T2-T) + 1.0*H*H/(R*Cp));
       
       return dx;
     };
     
     
     //! Calculates next step state variables
-    this.step = function(u, dt) {
+    this.step = function(t, u, dt) {
       // solve for new x state
-      x = solver.solve(this.dx, t, u, x, dt);
-      
+      x = solver.solve(this.dxfun, t, u, x, dt);
+
       // take care of bounds
       if (x[0] < 0.0)
-      if (x[0] > hmax) x[0] = hmax;
+      if (x[0] > hmax) x[0] = 0;
       if (x[1] > Tmax) x[1] = Tmax;
       
       return x;

@@ -2,13 +2,13 @@
 
 input { width: 100%; }
 
-#board {
+#layer1 {
   position:absolute;
   left:0px;
   top:0px;
 }
 
-#overlay {
+#layer2 {
   position:absolute;
   left:0px;
   top:0px;
