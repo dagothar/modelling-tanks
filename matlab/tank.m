@@ -9,20 +9,20 @@ Cp = 4190;      % specific heat capacity [J/(kg*K)]
 
 % Input & output properties:
 p1 = 200000;    % pressure at valve #1 [Pa]
-mu1 = 0.05;      % flow rate for valve #1 [1]
-k1 = 0.001;      % coefficient of valve opening area to actuator position [m^2/m] 
+mu1 = 0.05;     % flow rate for valve #1 [1]
+k1 = 0.001;     % coefficient of valve opening area to actuator position [m^2/m] 
 T1 = 10;        % temperature of fluid at valve #1 [deg C]
 
 p2 = 200000;    % pressure at valve #2 [Pa]
-mu2 = 0.05;      % flow rate for valve #2 [1]
-k2 = 0.001;      % coefficient of valve opening area to actuator position [m^2/m]
+mu2 = 0.05;     % flow rate for valve #2 [1]
+k2 = 0.001;     % coefficient of valve opening area to actuator position [m^2/m]
 T2 = 60;        % temperature of fluid at valve #2 [deg C]
 
-mu3 = 0.05;      % flow rate for valve #3 [1]
-k3 = 0.01;       % coefficient of valve opening area to actuator position [m^2/m]
+mu3 = 0.05;     % flow rate for valve #3 [1]
+k3 = 0.01;      % coefficient of valve opening area to actuator position [m^2/m]
 
 U = 230;        % voltage for the heater [V]
-R = 0.0001;          % resistance of the heater [ohm]
+R = 0.0001;     % resistance of the heater [ohm]
 
 % General properties:
 pa = 100000;    % atmospheric pressure [Pa]

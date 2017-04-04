@@ -74,9 +74,10 @@ var Tank = (function() {
       x = solver.solve(this.dxfun, t, u, x, dt);
 
       // take care of bounds
-      if (x[0] < 0.0)
-      if (x[0] > hmax) x[0] = 0;
+      if (x[0] < 0.0) x[0] = 0.0;
+      if (x[0] > hmax) x[0] = hmax;
       if (x[1] > Tmax) x[1] = Tmax;
+      if (isNaN(x[1])) x[1] = 0.0;
       
       return x;
     };
