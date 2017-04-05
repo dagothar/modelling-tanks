@@ -108,8 +108,32 @@ $(document).ready(function() {
   });
   
   
-  $('.slider-radius').on('input change', function() {
-    
+  $('.slider-z1').on('input change', function() {
+    if (!running) {
+      tank.setZ1(0.01 * $(this).val());
+      update();
+    }
+  });
+  
+  $('.slider-z2').on('input change', function() {
+    if (!running) {
+      tank.setZ2(0.01 * $(this).val());
+      update();
+    }
+  });
+  
+  $('.slider-z3').on('input change', function() {
+    if (!running) {
+      tank.setZ3(0.01 * $(this).val());
+      update();
+    }
+  });
+  
+  $('.slider-heater').on('input change', function() {
+    if (!running) {
+      tank.setHeater(0.01 * $(this).val());
+      update();
+    }
   });
   
 });

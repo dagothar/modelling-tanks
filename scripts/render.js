@@ -141,6 +141,25 @@ var Render = (function() {
     };
     
     
+    //! Draws flow.
+    function drawFlow(ctx, x, y, width, height, q, temperature) {
+      ctx.save();
+      
+      ctx.translate(x, y);
+      
+      ctx.fillStyle = T2color(temperature, 0.5);
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(q*width/2, height);
+      ctx.lineTo(-q*width/2, height);
+      ctx.lineTo(0, 0);
+      ctx.closePath();
+      ctx.fill();
+      
+      ctx.restore();
+    };
+    
+    
     //! Renders the model
     this.render = function(tank) {
       // clear 
@@ -150,7 +169,11 @@ var Render = (function() {
       
       /* draw water */
       ctx1.lineWidth = 3;
-      drawWater(ctx1, width/2, height/2+120, 300, 250, tank.getLevel(), tank.getTemperature(), 0.67);      
+      drawWater(ctx1, width/2, height/2+120, 300, 250, tank.getLevel(), tank.getTemperature(), 0.67);   
+      
+      /* draw flows */
+      drawFlow(ctx1, 200, 75, 10, 100, tank.getQ1(), 10);   
+      drawFlow(ctx1, 400, 75, 10, 100, tank.getQ2(), 60);   
       
       /* copy layer 1 to layer 2 */
       ctx2.drawImage(layer1, 0, 0);

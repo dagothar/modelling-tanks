@@ -43,9 +43,13 @@ var Tank = (function() {
     this.getQ2 = function() { return q2; };
     this.getQ3 = function() { return q3; };
     this.getZ1 = function() { return z1; };
+    this.setZ1 = function(z) { z1 = z; };
     this.getZ2 = function() { return z2; };
+    this.setZ2 = function(z) { z2 = z; };
     this.getZ3 = function() { return z3; };
+    this.setZ3 = function(z) { z3 = z; };
     this.getHeater = function() { return heater; };
+    this.setHeater = function(z) { heater = z; };
     
     
     //! Calculate derivatives of the state variables
