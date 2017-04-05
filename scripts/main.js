@@ -14,6 +14,8 @@ $(document).ready(function() {
   var layer2 = $('#layer2').get(0);
   
   var defaultParams = {
+    h0:     0.5,
+    T0:     20,
     D:      0.1,
     hmax:   1.0,
     ro:     1000.0,
@@ -58,6 +60,8 @@ $(document).ready(function() {
   function getParameters() {
     var params = clone(defaultParams);
     
+    params.h0 = parseFloat($('#parameter-h0').val());
+    params.T0 = parseFloat($('#parameter-T0').val());
     params.D = $('#parameter-D').val();
     params.hmax = $('#parameter-hmax').val();
     params.ro = $('#parameter-ro').val();
@@ -99,7 +103,8 @@ $(document).ready(function() {
     
     var params = getParameters();
     
-    var x0 = [0.5, 10.0];
+    var x0 = [params.h0, params.T0];
+    console.log(x0);
     
     var solver = new RK4();
     
@@ -189,6 +194,8 @@ $(document).ready(function() {
   
   $('.button-params').click(function() {
     if (!running) {
+      $('#parameter-h0').val(defaultParams.h0);
+      $('#parameter-T0').val(defaultParams.T0);
       $('#parameter-D').val(defaultParams.D);
       $('#parameter-hmax').val(defaultParams.hmax);
       $('#parameter-ro').val(defaultParams.ro);
