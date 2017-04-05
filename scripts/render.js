@@ -141,6 +141,35 @@ var Render = (function() {
     };
     
     
+    //! Draw the heater.
+    function drawHeater(ctx, x, y, width, height, coils, leads, state, name, texty) {
+      ctx.save();
+      
+      ctx.translate(x, y);
+      
+      ctx.strokeStyle = 'rgb(' + state * 255 + ', 0, 0)';
+      ctx.beginPath();
+        ctx.moveTo(-width/2, height/2+leads);
+        ctx.lineTo(-width/2, height/2);
+        
+        var dx = (1.0*width)/coils;
+        for (var i = 0; i < coils; ++i) {
+          ctx.lineTo(-width/2+i*dx+dx/2, -height/2);
+          ctx.lineTo(-width/2+(i+1)*dx, height/2);
+        }
+        
+        // coils
+        ctx.lineTo(width/2, height/2);
+        ctx.lineTo(width/2, height/2+leads);
+      ctx.stroke();
+      
+      // name
+      ctx.fillText(name, -width/2, texty);
+      
+      ctx.restore();
+    };
+    
+    
     //! Draws flow.
     function drawFlow(ctx, x, y, width, height, q, temperature) {
       ctx.save();
@@ -160,7 +189,7 @@ var Render = (function() {
     };
     
     
-    //! Renders the model
+    //! Renders the model.
     this.render = function(tank) {
       // clear 
       ctx1.clearRect(0, 0, width, height);
@@ -172,8 +201,9 @@ var Render = (function() {
       drawWater(ctx1, width/2, height/2+120, 300, 250, tank.getLevel(), tank.getTemperature(), 0.67);   
       
       /* draw flows */
-      drawFlow(ctx1, 200, 75, 10, 100, tank.getQ1(), 10);   
-      drawFlow(ctx1, 400, 75, 10, 100, tank.getQ2(), 60);   
+      drawFlow(ctx1, 200, 75, 10, 100, tank.getQ1(), tank.getT1());   
+      drawFlow(ctx1, 400, 75, 10, 100, tank.getQ2(), tank.getT2());   
+      drawFlow(ctx1, 550, 445, 10, 100, tank.getQ3(), tank.getTemperature());   
       
       /* copy layer 1 to layer 2 */
       ctx2.drawImage(layer1, 0, 0);
@@ -194,7 +224,6 @@ var Render = (function() {
       valve(ctx2, 500, 420, 50, 30, tank.getZ3(), 'Z3', 40);
       
       /* draw pipes */
-      
       // pipe 1
       ctx2.beginPath();
         ctx2.moveTo(25, 50);
@@ -221,6 +250,9 @@ var Render = (function() {
         ctx2.lineTo(550, 420);
         ctx2.lineTo(550, 445);
       ctx2.stroke();
+      
+      /* draw heater */
+      drawHeater(ctx2, width/2, height/2+70, 100, 25, 5, 150, tank.getHeater(), 'heater', 200);
       
     };
   };

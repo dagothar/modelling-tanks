@@ -23,19 +23,150 @@
       
       <div class="col-md-3">
         
-        <!-- RESULTS -->
+        <!-- PARAMETERS -->
         <div class="panel panel-default">
           
-          <div class="panel-heading">Results</div>
+          <div class="panel-heading">Parameters</div>
           
           <div class="panel-body">
-            <p>t <span id="time" class="pull-right">0 [s]</span></p>
-            <p>h <span id="level" class="pull-right text-primary">0 [m]</span></p>
-            <p>T <span id="temperature" class="pull-right text-danger">0 [C]</span></p>
-            <br/>
-            <p>q1 <span id="q1" class="pull-right text-primary">0 [kg/s]</span></p>
-            <p>q2 <span id="q2" class="pull-right text-primary">0 [kg/s]</span></p>
-            <p>q3 <span id="q3" class="pull-right text-primary">0 [kg/s]</span></p>
+            <form class="form-horizontal">
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">D [m]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-D" value="0.1">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">hmax [m]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-hmax" value="1">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">ro [kg/m^3]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-ro" value="1000">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">Cp [J/(kg*K)]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-Cp" value="4190">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">Tmax [C]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-Tmax" value="100">
+                </div>
+              </div>
+                
+              <div class="form-group">
+                <label class="control-label col-sm-6">p1 [Pa]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-p1" value="200000">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">mu1 [1]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-mu1" value="0.05">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">k1 [m^2/m]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-k1" value="0.001">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">T1 [C]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-T1" value="10">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">p2 [Pa]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-p2" value="200000">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">mu2 [1]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-mu2" value="0.05">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">k2 [m^2/m]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-k2" value="0.001">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">T2 [C]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-T2" value="60">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">mu3 [1]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-mu3" value="0.05">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">k3 [m^2/m]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-k3" value="0.01">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">U [V]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-U" value="230">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">R [ohm]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-R" value="0.25">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">pa [Pa]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-pa" value="100000">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-6">g [m/s^2]</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="parameter-g" value="9.81">
+                </div>
+              </div>
+              
+              <button type="button" class="button-params btn btn-default btn-block">Reset parameters <span class="glyphicon glyphicon-erase"></span></button>
+              
+            </form>
           </div>
           
         </div>
@@ -92,6 +223,24 @@
             </div>
             
           </div>
+        </div>
+        
+        
+        <!-- RESULTS -->
+        <div class="panel panel-default">
+          
+          <div class="panel-heading">Results</div>
+          
+          <div class="panel-body">
+            <p>t <span id="time" class="pull-right">0 [s]</span></p>
+            <p class="bg-info">h <span id="level" class="pull-right text-primary">0 [m]</span></p>
+            <p class="bg-info">T <span id="temperature" class="pull-right text-danger">0 [C]</span></p>
+            <br/>
+            <p>q1 <span id="q1" class="pull-right text-primary">0 [kg/s]</span></p>
+            <p>q2 <span id="q2" class="pull-right text-primary">0 [kg/s]</span></p>
+            <p>q3 <span id="q3" class="pull-right text-primary">0 [kg/s]</span></p>
+          </div>
+          
         </div>
         
         

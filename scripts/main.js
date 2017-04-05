@@ -1,7 +1,39 @@
+function clone(obj) {
+  if (null == obj || "object" != typeof obj) return obj;
+  var copy = obj.constructor();
+  for (var attr in obj) {
+    if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+  }
+  return copy;
+}
+
+
 $(document).ready(function() {
   
   var layer1 = $('#layer1').get(0);
   var layer2 = $('#layer2').get(0);
+  
+  var defaultParams = {
+    D:      0.1,
+    hmax:   1.0,
+    ro:     1000.0,
+    Cp:     4190.0,
+    Tmax:   100,
+    p1:     200000,
+    mu1:    0.05,
+    k1:     0.001,
+    T1:     10,
+    p2:     200000,
+    mu2:    0.05,
+    k2:     0.001,
+    T2:     60,
+    mu3:    0.05,
+    k3:     0.01,
+    U:      230,
+    R:      0.25,
+    pa:     100000,
+    g:      9.81
+  };
   
   var t = 0.0;
   var tank = undefined;
@@ -23,36 +55,49 @@ $(document).ready(function() {
   };
   
   
+  function getParameters() {
+    var params = clone(defaultParams);
+    
+    params.D = $('#parameter-D').val();
+    params.hmax = $('#parameter-hmax').val();
+    params.ro = $('#parameter-ro').val();
+    params.Cp = $('#parameter-Cp').val();
+    params.Tmax = $('#parameter-Tmax').val();
+    params.p1 = $('#parameter-p1').val();
+    params.mu1 = $('#parameter-mu1').val();
+    params.k1 = $('#parameter-k1').val();
+    params.T1 = $('#parameter-T1').val();
+    params.p2 = $('#parameter-p2').val();
+    params.mu2 = $('#parameter-mu2').val();
+    params.k2 = $('#parameter-k2').val();
+    params.T2 = $('#parameter-T2').val();
+    params.mu3 = $('#parameter-mu3').val();
+    params.k3 = $('#parameter-k3').val();
+    params.U = $('#parameter-U').val();
+    params.R = $('#parameter-R').val();
+    params.pa = $('#parameter-pa').val();
+    params.g = $('#parameter-g').val();
+    
+    return params;
+  };
+  
+  
   function reset() {
     clearInterval(stepTimer);
     running = false;
         
     $('.button-start').show();
     $('.button-stop').hide();
+    $('.form-control').prop('disabled', false);
+    
+    $('.slider-z1').val(0);
+    $('.slider-z2').val(0);
+    $('.slider-z3').val(0);
+    $('.slider-heater').val(0);
     
     t = 0.0;
     
-    var params = {
-      D:      0.1,
-      hmax:   1.0,
-      ro:     1000.0,
-      Cp:     4190.0,
-      Tmax:   100,
-      p1:     200000,
-      mu1:    0.05,
-      k1:     0.001,
-      T1:     10,
-      p2:     200000,
-      mu2:    0.05,
-      k2:     0.001,
-      T2:     60,
-      mu3:    0.05,
-      k3:     0.01,
-      U:      230,
-      R:      0.1,
-      pa:     100000,
-      g:      9.81
-    };
+    var params = getParameters();
     
     var x0 = [0.5, 10.0];
     
@@ -88,6 +133,11 @@ $(document).ready(function() {
   $('.button-start').click(function() {
     $(this).hide();
     $('.button-stop').show();
+    $('.form-control').prop('disabled', true);
+    
+    var params = getParameters();
+    tank.setParameters(params);
+    
     if (!running) {
       stepTimer = setInterval(step, 10);
       running = true;
@@ -98,6 +148,7 @@ $(document).ready(function() {
   $('.button-stop').click(function() {
     $(this).hide();
     $('.button-start').show();
+    $('.form-control').prop('disabled', false);
     clearInterval(stepTimer);
     running = false;
   });
@@ -133,6 +184,30 @@ $(document).ready(function() {
     if (!running) {
       tank.setHeater(0.01 * $(this).val());
       update();
+    }
+  });
+  
+  $('.button-params').click(function() {
+    if (!running) {
+      $('#parameter-D').val(defaultParams.D);
+      $('#parameter-hmax').val(defaultParams.hmax);
+      $('#parameter-ro').val(defaultParams.ro);
+      $('#parameter-Cp').val(defaultParams.Cp);
+      $('#parameter-Tmax').val(defaultParams.Tmax);
+      $('#parameter-p1').val(defaultParams.p1);
+      $('#parameter-mu1').val(defaultParams.mu1);
+      $('#parameter-k1').val(defaultParams.k1);
+      $('#parameter-T1').val(defaultParams.T1);
+      $('#parameter-p2').val(defaultParams.p2);
+      $('#parameter-mu2').val(defaultParams.mu2);
+      $('#parameter-k2').val(defaultParams.k2);
+      $('#parameter-T2').val(defaultParams.T2);
+      $('#parameter-mu3').val(defaultParams.mu3);
+      $('#parameter-k3').val(defaultParams.k3);
+      $('#parameter-U').val(defaultParams.U);
+      $('#parameter-R').val(defaultParams.R);
+      $('#parameter-pa').val(defaultParams.pa);
+      $('#parameter-g').val(defaultParams.g);
     }
   });
   

@@ -1,30 +1,56 @@
 var Tank = (function() {
   
   function Tank(params, x0, solver) {
-    
-    // parameters
-    var D = params.D;
-    var hmax = params.hmax;
-    var ro = params.ro;
-    var Cp = params.Cp;
-    var Tmax = params.Tmax;
-    var p1 = params.p1;
-    var mu1 = params.mu1;
-    var k1 = params.k1;
-    var T1 = params.T1;
-    var p2 = params.p2;
-    var mu2 = params.mu2;
-    var k2 = params.k2;
-    var T2 = params.T2;
-    var mu3 = params.mu3; 
-    var k3 = params.k3;
-    var U = params.U;
-    var R = params.R;
-    var pa = params.pa;
-    var g = params.g;
+    var D;
+    var hmax;
+    var ro;
+    var Cp;
+    var Tmax;
+    var p1;
+    var mu1;
+    var k1;
+    var T1;
+    var p2;
+    var mu2;
+    var k2;
+    var T2;
+    var mu3;
+    var k3;
+    var U;
+    var R;
+    var pa;
+    var g;
     
     var A = Math.PI * D*D / 4.0;
     var Aro = 1.0/(A * ro);
+    
+    // parameters
+    this.setParameters = function(params) {
+      D = params.D;
+      hmax = params.hmax;
+      ro = params.ro;
+      Cp = params.Cp;
+      Tmax = params.Tmax;
+      p1 = params.p1;
+      mu1 = params.mu1;
+      k1 = params.k1;
+      T1 = params.T1;
+      p2 = params.p2;
+      mu2 = params.mu2;
+      k2 = params.k2;
+      T2 = params.T2;
+      mu3 = params.mu3; 
+      k3 = params.k3;
+      U = params.U;
+      R = params.R;
+      pa = params.pa;
+      g = params.g;
+      
+      A = Math.PI * D*D / 4.0;
+      Aro = 1.0/(A * ro);
+    };
+    
+    this.setParameters(params);
     
     // state
     var x = x0;
@@ -50,6 +76,8 @@ var Tank = (function() {
     this.setZ3 = function(z) { z3 = z; };
     this.getHeater = function() { return heater; };
     this.setHeater = function(z) { heater = z; };
+    this.getT1 = function() { return T1; };
+    this.getT2 = function() { return T2; };
     
     
     //! Calculate derivatives of the state variables
