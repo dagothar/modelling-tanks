@@ -28,6 +28,7 @@ var Tank = (function() {
     
     // state
     var x = x0;
+    var z1 = 0.0, z2 = 0.0, z3 = 0.0, heater = 0.0;
     var q1 = 0.0, q2 = 0.0, q3 = 0.0;
     
     // solver
@@ -41,6 +42,10 @@ var Tank = (function() {
     this.getQ1 = function() { return q1; };
     this.getQ2 = function() { return q2; };
     this.getQ3 = function() { return q3; };
+    this.getZ1 = function() { return z1; };
+    this.getZ2 = function() { return z2; };
+    this.getZ3 = function() { return z3; };
+    this.getHeater = function() { return heater; };
     
     
     //! Calculate derivatives of the state variables
@@ -51,10 +56,11 @@ var Tank = (function() {
       var h = x[0];
       var T = x[1];
       
-      var z1 = u[0];
-      var z2 = u[1];
-      var z3 = u[2];
-      var H  = u[3] * U;
+      z1 = u[0];
+      z2 = u[1];
+      z3 = u[2];
+      heater = u[3];
+      var H  = heater * U;
       
       // calculate flows
       q1 = mu1*k1*z1*Math.sqrt(2*ro*(p1-pa));

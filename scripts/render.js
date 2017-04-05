@@ -17,48 +17,65 @@ var Render = (function() {
     var W2 = 3;
     
     
-    function T2color(t) {
+    //! Calculates the color of the heated water.
+    function T2color(t, alpha) {
       r = 255 * t / 100;
       g = 0;
       b = 255;
       
-      return 'rgba(' + Math.floor(r) + ', ' + Math.floor(g) + ', ' + Math.floor(b) + ', 0.2)';
+      return 'rgba(' + Math.floor(r) + ', ' + Math.floor(g) + ', ' + Math.floor(b) + ', ' + alpha.toFixed(2) + ')';
     };
     
     
-    function valve(width, height) {
-      ctx2.strokeStyle = 'rgb(0, 0, 0)';
-      ctx2.lineWidth = W2;
+    //! Draw a valve.
+    function valve(ctx, x, y, width, height, opening, name, texty) {
+      ctx.save();
       
-      ctx2.beginPath();
-        ctx2.moveTo(0, 0);
-        ctx2.lineTo(0, height);
-        ctx2.lineTo(width, 0);
-        ctx2.lineTo(width, height);
-        ctx2.lineTo(0, 0);
-      ctx2.closePath();
-      ctx2.stroke();
+      ctx.translate(x, y);
       
-      ctx2.beginPath();
-        ctx2.moveTo(width/2, height/2);
-        ctx2.lineTo(width/2, -height);
-      ctx2.stroke();
+      // setup
+      var d = opening * height / 2.0;
       
-      ctx2.beginPath();
-        ctx2.moveTo(0, -height);
-        ctx2.lineTo(width, -height);
-      ctx2.stroke();
+      // valve shape
+      ctx.beginPath();
+        ctx.moveTo(-width/2, -height/2);
+        ctx.lineTo(0, -d);
+        ctx.lineTo(width/2, -height/2);
+        ctx.lineTo(width/2, height/2);
+        ctx.lineTo(0, d);
+        ctx.lineTo(-width/2, height/2);
+        ctx.lineTo(-width/2, -height/2);
+      ctx.closePath();
+      ctx.stroke();
+      
+      // actuator
+      ctx.beginPath();
+        ctx.moveTo(0, -d);
+        ctx.lineTo(0, -d-height);
+        ctx.moveTo(-width/4, -d-height);
+        ctx.lineTo(width/4, -d-height);
+      ctx.closePath();
+      ctx.stroke();
+      
+      // name
+      ctx.fillText(name, -width/2, texty);
+      
+      ctx.restore();
     };
     
     
-    //! Renders the tank
+    //! Draw tank.
+    
+    
+    
+    //! Renders the model
     this.render = function(tank) {
       // clear 
       ctx1.clearRect(0, 0, width, height);
       ctx2.clearRect(0, 0, width, height);
       
       // find water color
-      var color = T2color(tank.getTemperature());
+      var color = T2color(tank.getTemperature(), 0.2);
       
       // draw water
       ctx1.save();
@@ -139,65 +156,16 @@ var Render = (function() {
       ctx2.strokeStyle = 'rgb(0, 0, 0)';
       ctx2.lineWidth = W2;
       
-      // draw valve 1
+      /* draw valves */
       ctx2.font = '25px Sans';
-      ctx2.fillText('Z1', 110, 90);
-      ctx2.beginPath();
-        ctx2.lineTo(10, 50);
-        ctx2.lineTo(100, 50);
-      ctx2.closePath();
-      ctx2.stroke();
+      ctx2.strokeStyle = 'rgb(0, 0, 0)';
+      ctx2.lineWidth = 3;
       
-      ctx2.save();
-        ctx2.translate(100, 35);
-        valve(50, 30);
-      ctx2.restore();
+      valve(ctx2, 100, 100, 50, 30, tank.getZ1(), 'Z1', 40);
+      valve(ctx2, 500, 100, 50, 30, tank.getZ2(), 'Z2', 40);
+      valve(ctx2, 500, 420, 50, 30, tank.getZ3(), 'Z3', 40);
       
-      ctx2.beginPath();
-        ctx2.lineTo(150, 50);
-        ctx2.lineTo(200, 50);
-        ctx2.lineTo(200, 80);
-      ctx2.stroke();
-      
-      // draw valve 2
-      ctx2.fillText('Z2', 460, 90);
-      ctx2.beginPath();
-        ctx2.lineTo(590, 50);
-        ctx2.lineTo(500, 50);
-      ctx2.closePath();
-      ctx2.stroke();
-      
-      ctx2.save();
-        ctx2.translate(450, 35);
-        valve(50, 30);
-      ctx2.restore();
-      
-      ctx2.beginPath();
-        ctx2.lineTo(450, 50);
-        ctx2.lineTo(400, 50);
-        ctx2.lineTo(400, 80);
-      ctx2.stroke();
-      
-      // draw valve 3
-      ctx2.fillText('Z3', 485, 460);
-      ctx2.beginPath();
-        ctx2.lineTo(450, 420);
-        ctx2.lineTo(475, 420);
-      ctx2.closePath();
-      ctx2.stroke();
-      
-      ctx2.save();
-        ctx2.translate(475, 405);
-        valve(50, 30);
-      ctx2.restore();
-      
-      ctx2.beginPath();
-        ctx2.lineTo(525, 420);
-        ctx2.lineTo(550, 420);
-        ctx2.lineTo(550, 450);
-      ctx2.stroke();
-      
-      // draw heater
+      /* draw pipes */
       
       
     };
