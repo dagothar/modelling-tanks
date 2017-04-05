@@ -10,6 +10,19 @@ $(document).ready(function() {
   var running = false;
   
   
+  //! Updates the model info
+  function update() {
+    $('#time').text(t.toFixed(2) + ' [s]');
+    $('#level').text(tank.getLevel().toFixed(3) + ' [m]');
+    $('#temperature').text(tank.getTemperature().toFixed(3) + ' [C]');
+    $('#q1').text(tank.getQ1().toFixed(3) + ' [kg/s]');
+    $('#q2').text(tank.getQ2().toFixed(3) + ' [kg/s]');
+    $('#q3').text(tank.getQ3().toFixed(3) + ' [kg/s]');
+    
+    render.render(tank);
+  };
+  
+  
   function reset() {
     clearInterval(stepTimer);
     running = false;
@@ -47,24 +60,14 @@ $(document).ready(function() {
     
     tank = new Tank(params, x0, solver);
     render = new Render(layer1, layer2);
-    render.render(tank);
+    update();
   };
   
   
   reset();
   
   
-  //! Updates the model info
-  function update() {
-    $('#time').text(t.toFixed(2) + ' [s]');
-    $('#level').text(tank.getLevel().toFixed(3) + ' [m]');
-    $('#temperature').text(tank.getTemperature().toFixed(3) + ' [C]');
-    $('#q1').text(tank.getQ1().toFixed(3) + ' [kg/s]');
-    $('#q2').text(tank.getQ2().toFixed(3) + ' [kg/s]');
-    $('#q3').text(tank.getQ3().toFixed(3) + ' [kg/s]');
-    
-    render.render(tank);
-  };
+  
   
   
   //! Updates the model

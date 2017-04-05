@@ -17,6 +17,15 @@ var Render = (function() {
     var W2 = 3;
     
     
+    function T2color(t) {
+      r = 255 * t / 100;
+      g = 0;
+      b = 255;
+      
+      return 'rgba(' + Math.floor(r) + ', ' + Math.floor(g) + ', ' + Math.floor(b) + ', 0.2)';
+    };
+    
+    
     function valve(width, height) {
       ctx2.strokeStyle = 'rgb(0, 0, 0)';
       ctx2.lineWidth = W2;
@@ -48,20 +57,23 @@ var Render = (function() {
       ctx1.clearRect(0, 0, width, height);
       ctx2.clearRect(0, 0, width, height);
       
+      // find water color
+      var color = T2color(tank.getTemperature());
+      
       // draw water
       ctx1.save();
       ctx1.scale(1, 0.67);
       
         // filled top surface
         ctx1.beginPath();
-        ctx1.fillStyle = 'rgba(0, 0, 255, 0.2)';
+        ctx1.fillStyle = color;
         ctx1.arc(width/2, (height/2+120-250*tank.getLevel())/0.67, 150, 1 * Math.PI, 2 * Math.PI);
         ctx1.fill();
         ctx1.closePath();
         
         // filled bottom surface
         ctx1.beginPath();
-        ctx1.fillStyle = 'rgba(0, 0, 255, 0.2)';
+        ctx1.fillStyle = color;
         ctx1.arc(width/2, (height/2+120)/0.67, 150, 0 * Math.PI, 1 * Math.PI);
         ctx1.fill();
         ctx1.closePath();
@@ -69,7 +81,7 @@ var Render = (function() {
       
       // water
       ctx1.beginPath();
-      ctx1.fillStyle = 'rgba(0, 0, 255, 0.2)';
+      ctx1.fillStyle = color;
       ctx1.fillRect(width/2-150, height/2+120-250*tank.getLevel(), 300, 250*tank.getLevel());
       //ctx1.fill();
       ctx1.closePath();
@@ -86,6 +98,8 @@ var Render = (function() {
         ctx1.closePath();
       ctx1.restore();
       
+      // draw flow 1
+      
       // draw tank
       ctx2.drawImage(layer1, 0, 0);
       ctx1.clearRect(0, 0, width, height);
@@ -95,10 +109,19 @@ var Render = (function() {
       ctx2.lineWidth = W2;
       ctx2.beginPath();
       ctx2.arc(width/2, (height/2+120)/0.67, 150, 0, 1 * Math.PI);
-      //ctx2.setLineDash([5, 15]);
-      ctx2.arc(width/2, (height/2+120)/0.67, 150, 1 * Math.PI, 2 * Math.PI);
       ctx2.stroke();
       ctx2.closePath();
+      
+      ctx2.beginPath();
+        ctx2.setLineDash([5, 15]);
+        ctx2.arc(width/2, (height/2+120)/0.67, 150, 1 * Math.PI, 2 * Math.PI);
+        ctx2.stroke();
+      ctx2.restore();
+      
+      ctx2.save();
+      ctx2.scale(1, 0.67);
+      ctx2.strokeStyle = 'rgb(0, 0, 0)';
+      ctx2.lineWidth = W2;
       ctx2.beginPath();
       ctx2.arc(width/2, (height/2+120-250)/0.67, 150, 0, 2 * Math.PI);
       ctx2.stroke();
@@ -117,6 +140,8 @@ var Render = (function() {
       ctx2.lineWidth = W2;
       
       // draw valve 1
+      ctx2.font = '25px Sans';
+      ctx2.fillText('Z1', 110, 90);
       ctx2.beginPath();
         ctx2.lineTo(10, 50);
         ctx2.lineTo(100, 50);
@@ -135,6 +160,7 @@ var Render = (function() {
       ctx2.stroke();
       
       // draw valve 2
+      ctx2.fillText('Z2', 460, 90);
       ctx2.beginPath();
         ctx2.lineTo(590, 50);
         ctx2.lineTo(500, 50);
@@ -153,6 +179,7 @@ var Render = (function() {
       ctx2.stroke();
       
       // draw valve 3
+      ctx2.fillText('Z3', 485, 460);
       ctx2.beginPath();
         ctx2.lineTo(450, 420);
         ctx2.lineTo(475, 420);
@@ -169,6 +196,9 @@ var Render = (function() {
         ctx2.lineTo(550, 420);
         ctx2.lineTo(550, 450);
       ctx2.stroke();
+      
+      // draw heater
+      
       
     };
   };
